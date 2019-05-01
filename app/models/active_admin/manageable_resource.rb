@@ -9,8 +9,8 @@ module ActiveAdmin
     end
 
     def call
-      namespace = ::ActiveAdmin.application.default_namespace
-      ::ActiveAdmin.application.namespaces[namespace].resources.inject([]) do |result, resource|
+      namespace = ::ActiveAdmin.application.namespaces[::ActiveAdmin.application.default_namespace] || ::ActiveAdmin.application.namespaces.first
+      namespace.resources.inject([]) do |result, resource|
         class_name = resource.controller.resource_class.to_s
         name       = resource.resource_name.name
         actions    = collect_defined_actions(resource)
